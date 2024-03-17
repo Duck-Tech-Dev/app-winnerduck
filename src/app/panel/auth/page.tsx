@@ -1,6 +1,9 @@
 'use client';
 
 import { Card, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
+import LogIn from "./LogIn";
+import SignUp from "./SignUp";
+
 export default function Home() {
   return (
     <div className="flex items-center justify-center ">
@@ -12,8 +15,10 @@ export default function Home() {
           </TabList>
           <TabPanels>
             <TabPanel>
+              <LogIn/>
             </TabPanel>
             <TabPanel>
+              <SignUp/>
             </TabPanel>
           </TabPanels>
         </TabGroup>
