@@ -1,5 +1,5 @@
 export class APIService {
-  private static baseURL: string = process.env.API_URL || 'http://localhost:3000';
+  static baseURL: string = process.env.API_URL || 'http://localhost:3000';
 
   static async signIn(username: string, password: string) {
     const response = await fetch(`${APIService.baseURL}/auth/login`, {
@@ -44,5 +44,4 @@ export class APIService {
     });
     return response.ok;
   }
-
 }
