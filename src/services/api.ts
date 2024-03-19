@@ -1,19 +1,19 @@
 export class APIService {
   static baseURL: string = process.env.API_URL || 'http://localhost:3000';
 
-  static async signIn(username: string, password: string) {
+  static async logIn(username: string, password: string) {
     const response = await fetch(`${APIService.baseURL}/auth/login`, {
       method: 'POST',
       body: JSON.stringify({ 
         "username": username, 
-        "password": password 
+        "password": password
       }),
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
     });
-    console.log(response);
+    console.log("API Response from logIn:\n", response);
     return response;
   }
 
@@ -30,7 +30,7 @@ export class APIService {
       },
       credentials: 'include',
     });
-    console.log(response);
+    console.log("API Response from signUp:\n", response);
     return response;
   }
 

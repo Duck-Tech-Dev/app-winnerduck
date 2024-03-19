@@ -15,7 +15,7 @@ const LogIn: React.FC = () => {
     /*
     Send the form to server, if username or password is wrong, show an error message.
     */
-    const response = await APIService.signIn(username, password);
+    const response = await APIService.logIn(username, password);
     if (!response.ok) {
       console.log('Error: ', response);
       return;
