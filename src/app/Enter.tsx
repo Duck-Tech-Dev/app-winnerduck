@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import { TextInput, Button, Card } from '@tremor/react';
+import { useRouter } from 'next/navigation';
+import { NumberInput, Button, Card } from '@tremor/react';
 
 const EnterRaffle: React.FC = () => {
   const [raffleID, setRaffleID] = useState<string>('');
@@ -34,8 +34,16 @@ const EnterRaffle: React.FC = () => {
         <h4 className="my-3 text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
           Enter Raffle ID
         </h4>
-        <TextInput className="my-3" onChange={onIDChange} onKeyDown={onIDKeyDown}/>
-        <Button className="my-3" size="xs" variant="primary" onClick={submitRaffleID}>
+        <NumberInput 
+          className="my-3" 
+          enableStepper={false}
+          onChange={onIDChange} 
+          onKeyDown={onIDKeyDown}/>
+        <Button 
+          className="my-3" 
+          size="xs" 
+          variant="primary" 
+          onClick={submitRaffleID}>
           Enter
         </Button>
 
