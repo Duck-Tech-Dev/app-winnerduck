@@ -7,17 +7,22 @@ export const config = {
 };
 
 const authPage = "/panel/auth";
+const panelPage = "/panel";
 
 export default async function middleware(req: NextRequest) {
+  const isAuthenticated = await validateToken(req.cookies.getAll());
   if (req.nextUrl.pathname === authPage) {
+    if (isAuthenticated) {
+      const panelRedirectUrl = new URL(panelPage, req.url);
+      return NextResponse.redirect(panelRedirectUrl);
+    }
     return NextResponse.next();
   }
-  const isAuthenticated = await validateToken(req.cookies.getAll());
   if (isAuthenticated) {
     return NextResponse.next();
   }
-  const redirectUrl = new URL(authPage, req.url);
-  return NextResponse.redirect(redirectUrl);
+  const authRedirectUrl = new URL(authPage, req.url);
+  return NextResponse.redirect(authRedirectUrl);
 }
 
 const validateToken = async (allCookies: any) => {
