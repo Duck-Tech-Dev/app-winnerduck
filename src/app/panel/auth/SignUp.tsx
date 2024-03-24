@@ -4,7 +4,7 @@ import { APIService } from '@/services/api';
 import { useRouter } from 'next/navigation';
 
 const userNameRegex = /^[a-zA-Z0-9_\-.!?]+$/;
-const emailRegex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+$/;
+const emailRegex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z])+$/;
 const passwordRegex = /^[a-zA-Z0-9_\-.!?]+$/;
 
 const SignUp: React.FC = () => {
@@ -52,6 +52,7 @@ const SignUp: React.FC = () => {
     const response = await APIService.signUp(username, email, password);
     if (!response.ok) {
       console.log('Error on SignUp: ', response);
+      setErrorMessage('Username or Email already exists');
       return;
     }
     router.push('/panel');
@@ -83,7 +84,6 @@ const SignUp: React.FC = () => {
       <TextInput
         className="my-3"
         placeholder="Email"
-        error={false}
         onChange={onEmailChange}
       />
       <TextInput
