@@ -47,7 +47,7 @@ const EnterRaffle: React.FC = () => {
       {loading && 
         <LoadingScreen/>
       }
-      <Card className="mx-auto max-w-sm">
+      <Card className="mx-auto max-w-sm m-4">
         <h4 className="my-3 text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
           Enter Raffle ID
         </h4>
