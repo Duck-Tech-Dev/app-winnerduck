@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { NumberInput, Button, Card } from '@tremor/react';
+import { NumberInput, Button, Card, Dialog, DialogPanel } from '@tremor/react';
 import LoadingScreen from '@/components/LoadingScreen';
+import { APIService } from '@/services/api';
 
 const EnterRaffle: React.FC = () => {
   const [raffleID, setRaffleID] = useState<string>('');
-  const [message, setMessage] = useState<string>('Enter a numeric ID pal ^^');
   const [loading, setLoading] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const router = useRouter();
 
   const onIDChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +55,19 @@ const EnterRaffle: React.FC = () => {
           Enter
         </Button>
       </Card>
+      <Dialog open={isDialogOpen} onClose={(val) => setIsDialogOpen(val)} static={true}>
+        <DialogPanel>
+          <h3 className="text-lg font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
+            Hey There!
+          </h3>
+          <p className="mt-2 leading-6 text-tremor-default text-tremor-content dark:text-dark-tremor-content">
+            Submitted ID is not valid! Please try again.
+          </p>
+          <Button className="mt-8 w-full" onClick={() => setIsDialogOpen(false)}>
+            Got it!
+          </Button>
+        </DialogPanel>
+      </Dialog>
     </>
   );
 }
