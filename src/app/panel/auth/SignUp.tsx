@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { TextInput, Button } from '@tremor/react';
 import { APIService } from '@/services/api';
+import { useRouter } from 'next/navigation';
+
+const userNameRegex = /^[a-zA-Z0-9_\-.!?]+$/;
+const emailRegex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+$/;
+const passwordRegex = /^[a-zA-Z0-9_\-.!?]+$/;
 
 const SignUp: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -8,51 +13,64 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>('');
-  const [isFormValid, setIsFormValid] = useState<boolean>(false);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = (): boolean => {
+    if (username.length < 3 || username.length > 32) {
+      setErrorMessage('Username must be between 3 and 32 characters long');
+      return false;
+    }
+    if (!userNameRegex.test(username)) {
+      setErrorMessage('Username cannot contain special characters');
+      return false;
+    }
+    if (!emailRegex.test(email)) {
+      setErrorMessage('Invalid email');
+      return false;
+    }
+    if (password.length < 8 || password.length > 32) {
+      setErrorMessage('Password must be between 8 and 32 characters long');
+      return false;
+    }
+    if (!passwordRegex.test(password)) {
+      setErrorMessage('Password cannot contain special characters');
+      return false;
+    }
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords do not match');
+      return false;
+    }
+    setErrorMessage("Everything is cool buddy");
+    return true;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    APIService.signUp(username, email, password);
+    const isFormValid = validateForm();
+    if (!isFormValid) return;
+
+    const response = await APIService.signUp(username, email, password);
+    if (!response.ok) {
+      console.log('Error on SignUp: ', response);
+      return;
+    }
+    router.push('/panel');
   };
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     setUsername(e.target.value);
-    validateForm();
   }
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     setEmail(e.target.value);
-    validateForm();
   } 
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     setPassword(e.target.value);
-    validateForm();
   }
 
   const onConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     setConfirmPassword(e.target.value);
-    validateForm();
-  }
-
-  const validateForm = (): void => {
-    if (username.length < 3) {
-      setIsFormValid(false);
-    }
-    else if (email.length < 3) {
-      setIsFormValid(false);
-    }
-    else if (password !== confirmPassword) {
-      setIsFormValid(false);
-    }
-    else if (password.length < 8) {
-      setIsFormValid(false);
-    }
-    setIsFormValid(true);
   }
 
   return (
@@ -65,7 +83,7 @@ const SignUp: React.FC = () => {
       <TextInput
         className="my-3"
         placeholder="Email"
-        type="email"
+        error={false}
         onChange={onEmailChange}
       />
       <TextInput
@@ -80,7 +98,8 @@ const SignUp: React.FC = () => {
         type="password"
         onChange={onConfirmPasswordChange}
       />
-      <Button className="my-3" type="submit" disabled={!isFormValid}>
+      <p className="text-red-500 my-3">{errorMessage}</p>
+      <Button className="my-3" type="submit">
         Sign Up
       </Button>
     </form>

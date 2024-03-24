@@ -3,48 +3,58 @@ import { TextInput, Button } from '@tremor/react';
 import { APIService } from '@/services/api';
 import { useRouter } from 'next/navigation';
 
+const userNameRegex = /^[a-zA-Z0-9_\-.!?]+$/;
+const passwordRegex = /^[a-zA-Z0-9_\-.!?]+$/;
+
 const LogIn: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [isFormValid, setIsFormValid] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const router = useRouter();
+
+  const validateForm = (): boolean => {
+    if (username.length < 3 || username.length > 32) {
+      setErrorMessage('Username must be between 3 and 32 characters long');
+      return false;
+    }
+    if (!userNameRegex.test(username)) {
+      setErrorMessage('Username cannot contain special characters');
+      return false;
+    }
+    if (password.length < 3 || password.length > 32) {
+      setErrorMessage('Password must be between 3 and 32 characters long');
+      return false;
+    }
+    if (!passwordRegex.test(password)) {
+      setErrorMessage('Password cannot contain special characters');
+      return false;
+    }
+    setErrorMessage("Everything is cool buddy");
+    return true;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(`Username: ${username}, Password: ${password}`);
-    /*
-    Send the form to server, if username or password is wrong, show an error message.
-    */
+    // get the value of the input fields
+
+
+    const isFormValid = validateForm();
+    if (!isFormValid) return;
+
     const response = await APIService.logIn(username, password);
     if (!response.ok) {
       console.log('Error: ', response);
       return;
     }
-    else {
-      router.push('/panel');
-    }
+    router.push('/panel');
   };
 
-  const validateForm = (): void => {
-    if (username.length < 1) {
-      setIsFormValid(false);
-    }
-    else if (password.length < 1) {
-      setIsFormValid(false);
-    }
-    setIsFormValid(true);
-  }
-
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     setUsername(e.target.value);
-    validateForm();
   }
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     setPassword(e.target.value);
-    validateForm();
   }
 
   return (
@@ -60,7 +70,8 @@ const LogIn: React.FC = () => {
         type="password"
         onChange={onPasswordChange} 
       />
-      <Button type="submit" disabled={!isFormValid}>
+      <p className="text-red-500 my-3">{errorMessage}</p>
+      <Button type="submit">
         Log In
       </Button>
     </form>
