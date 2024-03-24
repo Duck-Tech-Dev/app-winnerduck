@@ -26,8 +26,6 @@ const EnterRaffle: React.FC = () => {
     if (raffleID.length === 0) return;
     
     setLoading(true);
-    // wait for 1 seconds to continue
-    await new Promise(resolve => setTimeout(resolve, 1000));
 
     // check the server if id is valid
     // if not, show dialog
