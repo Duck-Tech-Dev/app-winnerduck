@@ -8,7 +8,7 @@ const LoadingScreen: React.FC = () => {
     <>
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
         <div className="fixed inset-0 bg-black opacity-50"></div>
-        <div className="absolute bottom-0 right-0 mr-6 mb-6">
+        <div className="absolute bottom-1/2 right-1/2">
           <ClockLoader color="#AAAAAA" />
         </div>
       </div>
