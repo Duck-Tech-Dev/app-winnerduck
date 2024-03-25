@@ -48,17 +48,16 @@ const EnterRaffle: React.FC = () => {
         <LoadingScreen/>
       }
       <Card className="mx-auto max-w-sm m-4">
-        <h4 className="my-3 text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
+        <h4 className="mb-3 text-center text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
           Enter Raffle ID
         </h4>
         <NumberInput 
-          className="my-3" 
+          className="my-3"
           enableStepper={false}
           onChange={onIDChange} 
           onKeyDown={onIDKeyDown}/>
         <Button 
-          className="my-3" 
-          size="xs" 
+          className="my-3 w-full"
           variant="primary" 
           onClick={submitRaffleID}>
           Enter
