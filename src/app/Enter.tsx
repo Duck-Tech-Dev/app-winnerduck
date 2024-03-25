@@ -24,21 +24,15 @@ const EnterRaffle: React.FC = () => {
 
   const submitRaffleID = async () => {
     if (raffleID.length === 0) return;
-    
     setLoading(true);
-
-    // check the server if id is valid
-    // if not, show dialog
+    // check the server if id is valid, if not, show dialog
     // TODO: API comment will be removed after backend route is ready
     const isIDValid = true; // await APIService.checkRaffleID(raffleID);
-
     if (!isIDValid) {
       setLoading(false);
       setIsDialogOpen(true);
       return;
     }
-
-    // if so, redirect to raffle page
     router.push(`/raffle/${raffleID}`);
   }
 
