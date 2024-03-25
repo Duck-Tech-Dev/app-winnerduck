@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Switch } from '@tremor/react';
 
 const ToggleTheme = () => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -12,7 +12,7 @@ const ToggleTheme = () => {
   };
 
   return (
-    <Switch 
+    <Switch
       checked={isDarkMode} 
       onChange={toggleTheme}
       />
