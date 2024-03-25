@@ -44,4 +44,16 @@ export class APIService {
     });
     return response.ok;
   }
+
+  static async checkRaffleID(raffleID: string): Promise<boolean> {
+    const query = new URLSearchParams({ id: raffleID });
+    const response = await fetch(`${APIService.baseURL}/raffle/check?` + query, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    return response.ok;
+  }
 }
