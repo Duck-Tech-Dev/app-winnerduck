@@ -2,6 +2,15 @@
 
 import { useEffect, useState } from "react";
 import LocalService from '@/utils/LocalService';
+import LoadingScreen from "@/components/LoadingScreen";
+import { RaffleForm } from "@/interfaces/raffleForm";
+import AfterSubmission from "./AfterSubmission";
+import ToggleTheme from "@/components/ToggleTheme";
+import { APIService } from "@/services/api";
+import Form from "./Form";
+
+// Debugging
+import { TestForm } from "./test_form";
 
 type Props = {
   params: {
@@ -13,18 +22,22 @@ export default function RafflePage({ params }: Props) {
   const id = params.id;
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [formData, setFormData] = useState<RaffleForm | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    if (LocalService.checkRaffleID(id)) {
-      setIsSubmitted(true);
-    }
-    // check if the IP address has already submitted
-    // ...
-    setIsLoading(false);
+    const fetchData = async () => {
+      setIsLoading(true);
+      if (LocalService.checkRaffleID(id)) {
+        setIsSubmitted(true);
+      }
+      const formInfo: RaffleForm = TestForm; //await APIService.getRaffleInfo(id);
+      setFormData(formInfo);
+      setIsLoading(false);
+    };
+    fetchData();
   }, [id]);
 
-  const submitForm = () => {
+  const sendForm = () => {
     // send the form data to the server
     // ...
     LocalService.addRaffleID(id);
@@ -33,21 +46,22 @@ export default function RafflePage({ params }: Props) {
   // if loading, show loading spinner, if not, show form, if submitted, show success message
   return (
     <main>
-      <h1>{id}</h1>
-
+      <div className="absolute top-4 right-4">
+        <ToggleTheme />
+      </div>
+      
       {isLoading && (
-        <p>Loading...</p>
+        <LoadingScreen/>
       )}
 
-      {!isLoading && !isSubmitted && (
-        <form onSubmit={submitForm}>
-          <input type="text" placeholder="Name" />
-          <button type="submit">Submit</button>
-        </form>
+      {!isLoading && !isSubmitted && formData && (
+        <div className="flex items-center justify-center min-h-screen light">
+          <Form raffleForm={formData} sendForm={sendForm}/>
+        </div>
       )}
 
-      {isSubmitted && (
-        <p>You have submitted!</p>
+      {isSubmitted && formData && (
+        <AfterSubmission raffleInfo={formData}/>
       )}
     </main>
   );
