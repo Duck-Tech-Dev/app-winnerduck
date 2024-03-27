@@ -3,6 +3,7 @@ export interface Question {
   description: string;
   type: string;
   template: string;
+  isRequired: boolean;
 }
 
 export interface RaffleForm {

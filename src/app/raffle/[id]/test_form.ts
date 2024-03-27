@@ -6,64 +6,32 @@ export const TestForm: RaffleForm = {
   description: "This is a test form, Regular Show is crazy maan, yeyyooo",
   questions: [
     {
-      title: "What is your name?",
-      description: "Please enter your name",
+      title: "Name & Surname",
+      description: "Please enter your full name",
       type: "text",
-      template: "text"
+      template: "none",
+      isRequired: true
     },
     {
-      title: "What is your email?",
-      description: "Please enter your email",
+      title: "Phone Number",
+      description: "A phone number we can reach you at",
       type: "text",
-      template: "email"
+      template: "phone",
+      isRequired: true
     },
     {
-      title: "What is your age?",
+      title: "Email",
+      description: "Please enter an email address we can reach you at",
+      type: "text",
+      template: "email",
+      isRequired: false
+    },
+    {
+      title: "Age",
       description: "Please enter your age",
       type: "number",
-      template: "number"
-    },
-    {
-      title: "What is your favorite color?",
-      description: "Please enter your favorite color",
-      type: "text",
-      template: "text"
-    },
-    {
-      title: "What is your favorite food?",
-      description: "Please enter your favorite food",
-      type: "text",
-      template: "text"
-    },
-    {
-      title: "What is your favorite movie?",
-      description: "Please enter your favorite movie",
-      type: "text",
-      template: "text"
-    },
-    {
-      title: "What is your favorite song?",
-      description: "Please enter your favorite song",
-      type: "text",
-      template: "text"
-    },
-    {
-      title: "What is your favorite book?",
-      description: "Please enter your favorite book",
-      type: "text",
-      template: "text"
-    },
-    {
-      title: "What is your favorite game?",
-      description: "Please enter your favorite game",
-      type: "text",
-      template: "text"
-    },
-    {
-      title: "What is your favorite animal?",
-      description: "Please enter your favorite animal",
-      type: "text",
-      template: "text"
+      template: "none",
+      isRequired: true
     },
   ]
 };
