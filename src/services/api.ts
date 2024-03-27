@@ -56,4 +56,30 @@ export class APIService {
     });
     return response.ok;
   }
+
+  static async getRaffleInfo(raffleID: string): Promise<any> {
+    const query = new URLSearchParams({ id: raffleID });
+    const response = await fetch(`${APIService.baseURL}/raffle/info?` + query, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    return response.json();
+  }
+
+  static async postRaffleForm(raffleID: string, form: any) {
+    form.id = raffleID;
+    const response = await fetch(`${APIService.baseURL}/raffle/form`, {
+      method: 'POST',
+      body: JSON.stringify(form),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    return response;
+  }
+
 }

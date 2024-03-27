@@ -7,7 +7,6 @@ const Wrapper = () => {
 
   useEffect(() => {
     ThemeService.setThemeFromLocal();
-    console.log("Wrapper mounted fella, yeaaah!!");
   }, []);
 
   return (
