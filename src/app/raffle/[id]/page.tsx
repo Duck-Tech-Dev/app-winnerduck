@@ -37,7 +37,7 @@ export default function RafflePage({ params }: Props) {
     fetchData();
   }, [id]);
 
-  const sendForm = () => {
+  const handleSendForm = () => {
     // send the form data to the server
     // ...
     LocalService.addRaffleID(id);
@@ -56,7 +56,7 @@ export default function RafflePage({ params }: Props) {
 
       {!isLoading && !isSubmitted && formData && (
         <div className="flex items-center justify-center min-h-screen light">
-          <Form raffleForm={formData} sendForm={sendForm}/>
+          <Form raffleForm={formData} handleSendForm={handleSendForm}/>
         </div>
       )}
 
