@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import LocalService from '@/utils/LocalService';
+import LocalService from '@/services/LocalService';
 
 type Props = {
   params: {
