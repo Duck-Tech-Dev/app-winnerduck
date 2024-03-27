@@ -36,16 +36,18 @@ const Form: React.FC<FormProps> = ({ raffleForm, handleSendForm }) => {
       return;
     }
     handleSendForm();
-
   }
 
   return (
-    <Card className="max-w-lg mx-4 my-12 p-8">
+    <Card 
+      className="max-w-lg mx-4 my-12 lg:p-8 p-4"
+      decoration="top"
+      >
       <form onSubmit={submitForm}>
-        <h2 className="mb-3 text-center text-2xl font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
+        <h2 className="mb-3 text-center text-lg md:text-2xl font-bold text-tremor-content-strong dark:text-dark-tremor-content-strong">
           {raffleForm.title}
         </h2>
-        <p className="mb-12 mt-3 text-tremor-content-strong dark:text-dark-tremor-content-strong">
+        <p className="mb-12 mt-3 text-xs md:text-sm text-tremor-content-strong dark:text-dark-tremor-content-strong">
           {raffleForm.description}
         </p>
         {raffleForm.questions.map((question, index) => (

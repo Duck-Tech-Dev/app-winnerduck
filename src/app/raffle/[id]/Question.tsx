@@ -74,21 +74,21 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
 
   return (
     <Card 
-      className="max-w-lg mx-4 my-8 p-4"
+      className="p-4 my-4 md:max-w-lg md:my-8 md:p-4 "
       decoration="left"
       >
       <div className="flex">
-        <h3 className='mb-3 text-lg text-tremor-content-strong dark:text-dark-tremor-content-strong'>
+        <h3 className="mb-3 font-semibold text-sm md:text-lg text-tremor-content-strong dark:text-dark-tremor-content-strong">
           {questionInfo.title}
         </h3>
         {questionInfo.isRequired && (
-          <p className='text-red-500 ml-2'>*</p>
+          <p className="text-red-500 ml-2 text-xs md:text-sm">*</p>
         )}
       </div>
-      <p className='mb-3 text-sm text-tremor-content-strong dark:text-dark-tremor-content-strong'>
+      <p className="mb-3 text-xs md:text-sm text-tremor-content-strong dark:text-dark-tremor-content-strong">
         {questionInfo.description}
       </p>
-      <div className='my-3'>
+      <div className="my-3">
         {inputField()}
       </div>
       {fieldError && (
