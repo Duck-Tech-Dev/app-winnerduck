@@ -19,12 +19,20 @@ export default class LocalService {
 
   // Theme
   static getTheme(): Theme {
-    const theme = localStorage.getItem('theme');
-    if (!theme) {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      return systemTheme as Theme;
+    // try-catch is added just in case, if
+    // local storage is disabled or any differencse 
+    // for any platform for prefers-color-scheme 
+    try {
+      const theme = localStorage.getItem('theme');
+      if (!theme) {
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        return systemTheme as Theme;
+      }
+      return theme as Theme;
     }
-    return theme as Theme;
+    catch {
+      return 'dark';
+    }
   }
 
   static setTheme(theme: 'dark' | 'light'): void {
