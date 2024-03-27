@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import LocalService from '@/utils/LocalService';
+import LocalService from '@/services/LocalService';
 import LoadingScreen from "@/components/LoadingScreen";
 import { RaffleForm } from "@/interfaces/raffleForm";
 import AfterSubmission from "./AfterSubmission";
