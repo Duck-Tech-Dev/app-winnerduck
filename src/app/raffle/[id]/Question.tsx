@@ -62,12 +62,12 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
   const inputField = () => {
     if (questionInfo.type === "text") {
       return (
-        <TextInput onChange={handleInputValueChanged}/>
+        <TextInput onChange={handleInputValueChanged} className="duration-0"/>
       );
     }
     if (questionInfo.type === "number") {
       return (
-        <NumberInput enableStepper={false} onChange={handleInputValueChanged}/>
+        <NumberInput enableStepper={false} onChange={handleInputValueChanged} className="duration-0"/>
       );
     }
   }

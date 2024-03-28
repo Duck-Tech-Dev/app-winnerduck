@@ -46,7 +46,7 @@ const EnterRaffle: React.FC = () => {
           Enter Raffle ID
         </h4>
         <NumberInput 
-          className="my-3"
+          className="my-3 duration-0"
           enableStepper={false}
           onChange={onIDChange} 
           onKeyDown={onIDKeyDown}/>
