@@ -40,8 +40,7 @@ const Form: React.FC<FormProps> = ({ raffleForm, handleSendForm }) => {
 
   return (
     <Card 
-      className="max-w-lg mx-4 my-12 lg:p-8 p-4"
-      decoration="top"
+      className="max-w-lg mx-4 my-12 lg:p-8 p-4 border-l-4 border-t-4"
       >
       <form onSubmit={submitForm}>
         <h2 className="mb-3 text-center text-lg md:text-2xl font-bold text-tremor-content-strong dark:text-dark-tremor-content-strong">
