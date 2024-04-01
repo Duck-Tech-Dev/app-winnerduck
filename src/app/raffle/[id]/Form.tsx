@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { RaffleForm } from "@/interfaces/raffleForm";
+import RaffleForm from "@/interfaces/raffleForm";
 import Question from './Question';
 import { Card, Button } from '@tremor/react';
 import { APIService } from '@/services/api';

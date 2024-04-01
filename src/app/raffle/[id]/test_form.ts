@@ -1,4 +1,4 @@
-import { RaffleForm } from "@/interfaces/raffleForm";
+import RaffleForm from "@/interfaces/raffleForm";
 
 export const TestForm: RaffleForm = {
   id: "10101010",
