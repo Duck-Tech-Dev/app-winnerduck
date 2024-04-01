@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Question } from "@/interfaces/raffleForm";
+import RaffleQuestion from "@/interfaces/raffleQuestion";
 import { Card, TextInput, NumberInput } from '@tremor/react';
 import { useEffect } from 'react';
 
 interface QuestionProps {
   index: number;
-  questionInfo: Question;
+  questionInfo: RaffleQuestion;
   onFieldChecked: (index: number, newValue: string | null) => void;
 }
 

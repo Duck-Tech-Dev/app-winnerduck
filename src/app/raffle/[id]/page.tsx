@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import LocalService from '@/services/LocalService';
 import LoadingScreen from "@/components/LoadingScreen";
-import { RaffleForm } from "@/interfaces/raffleForm";
+import RaffleForm from "@/interfaces/raffleForm";
 import AfterSubmission from "./AfterSubmission";
 import ToggleTheme from "@/components/ToggleTheme";
 import { APIService } from "@/services/api";
