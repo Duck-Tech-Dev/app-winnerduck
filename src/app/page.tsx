@@ -2,8 +2,6 @@ import EnterRaffle from "./Enter";
 import ToggleTheme from "@/components/ToggleTheme";
 import Footer from "@/components/Footer";
 
-// toggle theme component will be at the top right corner
-
 export default function Home() {
   return (
     <main>

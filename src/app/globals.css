@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -32,3 +31,38 @@ body {
     text-wrap: balance;
   }
 }
+
+
+/* Background */
+@keyframes fade-dark {
+  from {
+    background: #070707;
+  }
+  to {
+    background: #242424;
+  }
+}
+
+@keyframes fade-light {
+  from {
+    background: #F5F5F5;
+  }
+  to {
+    background: #D6D6D6;
+  }
+}
+
+.animatedbg-row {
+  background: #F5F5F5;
+  width: 100%;
+  animation: fade-light 3s infinite;
+  animation-direction: alternate;
+}
+
+.dark .animatedbg-row {
+  background: #070707;
+  animation: fade-dark 3s infinite;
+  animation-direction: alternate;
+}
+
+/**/
