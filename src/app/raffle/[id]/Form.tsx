@@ -18,7 +18,7 @@ const Form: React.FC<FormProps> = ({ raffleForm, handleSendForm }) => {
 
   useEffect(() => {
     // if the field is required, set it to null
-    const initialFields = raffleForm.questions.map(question => question.isRequired ? null : '');
+    const initialFields = raffleForm.questions.map(question => (question.isOptional && question.isOptional === true) ? null : '');
     setFields(initialFields);
   }, [raffleForm.questions]);
 
