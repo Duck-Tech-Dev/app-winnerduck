@@ -126,6 +126,21 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
     }
   }
 
+  const handleSliderInputChanged = async (element: React.ChangeEvent<HTMLInputElement>) => {
+    const isValid = await isFieldValid(element.target.value);
+    // get slider-output keyed element
+    const sliderOutput = document.getElementById("slider-output");
+    if (sliderOutput) {
+      sliderOutput.textContent = element.target.value;
+    }
+    if (!isValid) {
+      onFieldChecked(index, null);
+    }
+    else {
+      onFieldChecked(index, element.target.value);
+    }
+  }
+
   const handleDateInputChanged = async (selectedDate: DatePickerValue) => {
     const date = selectedDate as Date;
     const value = date ? date.toISOString() : '';
@@ -216,16 +231,14 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
             <p className="mr-2 text-xs md:text-sm text-tremor-content-strong dark:text-dark-tremor-content-strong">
               {questionInfo.start}
             </p>
-            <input className="w-full outline-none"
-                  type="range" 
-                  min={questionInfo.start} 
-                  max={questionInfo.end} 
-                  step={questionInfo.step} 
-                  defaultValue={questionInfo.defaultValue} 
-                  onChange={handleInputChanged}/>
-            <p className="ml-2 text-xs md:text-sm text-tremor-content-strong dark:text-dark-tremor-content-strong">
-              {questionInfo.end}
-            </p>
+              <input className="w-full outline-none"
+                    type="range" 
+                    min={questionInfo.start} 
+                    max={questionInfo.end} 
+                    step={questionInfo.step} 
+                    defaultValue={questionInfo.defaultValue || questionInfo.end} 
+                    onChange={handleSliderInputChanged}/>
+            <p id="slider-output" className="ml-2 text-xs md:text-sm text-tremor-content-strong dark:text-dark-tremor-content-strong"></p>
           </div>
         </Card>
       );
