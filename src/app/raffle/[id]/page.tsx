@@ -43,7 +43,7 @@ export default function RafflePage({ params }: Props) {
     LocalService.addRaffleID(id);
     setIsSubmitted(true);
   }
-  // if loading, show loading spinner, if not, show form, if submitted, show success message
+
   return (
     <main>
       <div className="absolute top-4 right-4">
