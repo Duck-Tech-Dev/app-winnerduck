@@ -13,7 +13,7 @@ interface FormProps {
 }
 
 const Form: React.FC<FormProps> = ({ raffleForm, handleSendForm }) => {
-  const [fields, setFields] = useState<Array<string | null>>([null,]);
+  const [fields, setFields] = useState<Array<string | string[] | null>>([null,]);
   const [warningMessage, setWarningMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Form: React.FC<FormProps> = ({ raffleForm, handleSendForm }) => {
     setFields(initialFields);
   }, [raffleForm.questions]);
 
-  const onFieldChecked = (index: number, newValue: string | null) => {
+  const onFieldChecked = (index: number, newValue: string | string[] | null) => {
     const newFields = [...fields];
     newFields[index] = newValue;
     setFields(newFields);
