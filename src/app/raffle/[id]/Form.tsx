@@ -35,6 +35,11 @@ const Form: React.FC<FormProps> = ({ raffleForm, handleSendForm }) => {
       setWarningMessage('Please fill in all required fields');
       return;
     }
+    // send the form data to the server
+    /// change all the nulls to ''
+    const data = fields.map(field => field === null ? '' : field);
+    const response = await APIService.postRaffleForm(raffleForm.id, data);
+    // TODO: check if the response is successful, change the UI accordingly
     handleSendForm();
   }
 

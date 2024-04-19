@@ -38,8 +38,6 @@ export default function RafflePage({ params }: Props) {
   }, [id]);
 
   const handleSendForm = () => {
-    // send the form data to the server
-    // ...
     LocalService.addRaffleID(id);
     setIsSubmitted(true);
   }
