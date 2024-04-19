@@ -2,13 +2,12 @@
 
 import React from 'react';
 import RaffleQuestion from "@/interfaces/raffleQuestion";
-import { Card, TextInput, NumberInput, Select, SelectItem, MultiSelect, MultiSelectItem, DatePicker } from '@tremor/react';
-import { useEffect } from 'react';
+import { Card, TextInput, NumberInput, Select, SelectItem, MultiSelect, MultiSelectItem, DatePicker, DatePickerValue } from '@tremor/react';
 
 interface QuestionProps {
   index: number;
   questionInfo: RaffleQuestion;
-  onFieldChecked: (index: number, newValue: string | null) => void;
+  onFieldChecked: (index: number, newValue: string | string[] | null) => void;
 }
 
 const getQuestionRegex = (type: string): RegExp => {
@@ -33,6 +32,9 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
   const questionRegex = getQuestionRegex(questionInfo.type);
   const isFieldOptional = questionInfo.isOptional && questionInfo.isOptional === true;
 
+
+  //#region Field Validation
+
   const isFieldValid = async (currentValue: string): Promise<boolean> => {
     if (isFieldOptional) {
       setFieldError(null);
@@ -42,7 +44,7 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
       setFieldError('This field is required');
       return false
     }
-    if (!questionRegex.test(currentValue)) {
+    if (!questionRegex.test(currentValue as string)) {
       setFieldError('Invalid input');
       return false;
     }
@@ -50,27 +52,93 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
     return true;
   }
 
-  const handleInputChanged = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
-    const isValid = await isFieldValid(e.target.value);
+  const isSelectFieldValid = async (currentValue: string): Promise<boolean> => {
+    if (isFieldOptional) {
+      setFieldError(null);
+      return true;
+    }
+    if (currentValue === '') {
+      setFieldError('This field is required');
+      return false;
+    }
+    setFieldError(null);
+    return true;
+  }
+
+  const isMultiFieldValid = async (currentValue: string[]): Promise<boolean> => {
+    if (isFieldOptional) {
+      setFieldError(null);
+      return true;
+    }
+    if (currentValue.length === 0) {
+      setFieldError('This field is required');
+      return false;
+    }
+    setFieldError(null);
+    return true;
+  }
+
+  const isDateFieldValid = async (currentValue: string): Promise<boolean> => {
+    // currentValue is ISO string date
+    if (isFieldOptional) {
+      setFieldError(null);
+      return true;
+    }
+    if (currentValue === '') {
+      setFieldError('This field is required');
+      return false;
+    }
+    setFieldError(null);
+    return true;
+  }
+
+  //#endregion
+
+  //#region Handling Input Changes
+
+  const handleInputChanged = async (element: React.ChangeEvent<HTMLInputElement>) => {
+    const isValid = await isFieldValid(element.target.value);
     if (!isValid) {
       onFieldChecked(index, null);
     }
     else {
-      onFieldChecked(index, e.target.value);
+      onFieldChecked(index, element.target.value);
     }
   }
 
-  const handleInputValueChanged = async (newValue: any) => {
-    console.log(newValue);
-    const isValid = await isFieldValid(newValue);
+  const handleSelectInputChanged = async (selected: string) => {
+    const isValid = await isSelectFieldValid(selected);
     if (!isValid) {
       onFieldChecked(index, null);
     }
     else {
-      onFieldChecked(index, newValue);
+      onFieldChecked(index, selected);
     }
   }
+
+  const handleMultiSelectInputChanged = async (allSelected: string[]) => {
+    const isValid = await isMultiFieldValid(allSelected);
+    if (!isValid) {
+      onFieldChecked(index, null);
+    }
+    else {
+      onFieldChecked(index, allSelected);
+    }
+  }
+
+  const handleDateInputChanged = async (selectedDate: DatePickerValue) => {
+    const date = selectedDate as Date;
+    const value = date ? date.toISOString() : '';
+    const isValid = await isDateFieldValid(value);
+    if (!isValid) {
+      onFieldChecked(index, null);
+    }
+    else {
+      onFieldChecked(index, value);
+    }
+  }
+
+  //#endregion
 
   const inputField = () => {
     if (questionInfo.type === "text") {
@@ -119,7 +187,7 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
       return (
         <Select 
           className="duration-0" 
-          onChange={handleInputValueChanged}>
+          onValueChange={handleSelectInputChanged}>
           {questionInfo.options?.map((option, index) => (
             <SelectItem key={index} value={option}>
               {option}
@@ -132,7 +200,7 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
       return (
         <MultiSelect 
           className="duration-0" 
-          onChange={handleInputValueChanged}>
+          onValueChange={handleMultiSelectInputChanged}>
           {questionInfo.options?.map((option, index) => (
             <MultiSelectItem key={index} value={option}>
               {option}
@@ -165,8 +233,8 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
     if (questionInfo.type === "date") {
       return (
         <DatePicker 
-          className="duration-0" 
-          onChange={handleInputChanged}/>
+          className="duration-0"
+          onValueChange={handleDateInputChanged}/>
       );
     }
   }
