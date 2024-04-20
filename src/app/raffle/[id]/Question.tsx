@@ -2,6 +2,8 @@
 
 import React from 'react';
 import RaffleQuestion from "@/interfaces/raffleQuestion";
+// import phone icon
+import { RiPhoneFill } from "@remixicon/react"
 import { Card, TextInput, NumberInput, Select, SelectItem, MultiSelect, MultiSelectItem, DatePicker, DatePickerValue } from '@tremor/react';
 
 interface QuestionProps {
@@ -17,7 +19,7 @@ const getQuestionRegex = (type: string): RegExp => {
     case "email":
       return /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z])+$/;
     case "phone":
-      return /^\d{10}$/;
+      return /^\d{11,13}$/; // including country code
     case "number":
       return /^\d+$/;
     case "text":
@@ -184,17 +186,12 @@ const Question: React.FC<QuestionProps> = ({ index, questionInfo, onFieldChecked
     if (questionInfo.type === "phone") {
       return (
           <div className="flex">
-            <select className="flex w-auto outline-none w-full outline-none text-left whitespace-nowrap truncate rounded-tremor-default focus:ring-2 transition duration-100 border pr-8 py-2 border-tremor-border shadow-tremor-input focus:border-tremor-brand-subtle focus:ring-tremor-brand-muted dark:border-dark-tremor-border dark:shadow-dark-tremor-input dark:focus:border-dark-tremor-brand-subtle dark:focus:ring-dark-tremor-brand-muted bg-tremor-background border-tremor-border divide-tremor-border shadow-tremor-dropdown dark:bg-dark-tremor-background dark:border-dark-tremor-border dark:divide-dark-tremor-border dark:shadow-dark-tremor-dropdown text-tremor-content-subtle dark:text-dark-tremor-content-subtle">
-              <option value="+90" className="flex justify-start items-center cursor-default text-tremor-default px-2.5 py-2.5 ui-active:bg-tremor-background-muted  ui-active:text-tremor-content-strong ui-selected:text-tremor-content-strong ui-selected:bg-tremor-background-muted text-tremor-content-emphasis dark:ui-active:bg-dark-tremor-background-muted  dark:ui-active:text-dark-tremor-content-strong dark:ui-selected:text-dark-tremor-content-strong dark:ui-selected:bg-dark-tremor-background-muted dark:text-dark-tremor-content-emphasis">
-                +90
-              </option>
-            </select>
             <NumberInput
+              icon={RiPhoneFill}
               className="duration-0" 
               onChange={handleInputChanged} 
               enableStepper={false} 
-              max={9999999999}
-              placeholder="5554443322"/>
+              placeholder="90 555 444 33 22"/>
           </div>
       );
     }
