@@ -13,16 +13,16 @@ interface FormProps {
 }
 
 const Form: React.FC<FormProps> = ({ raffleForm, handleSendForm }) => {
-  const [fields, setFields] = useState<Array<string | null>>([null,]);
+  const [fields, setFields] = useState<Array<string | string[] | null>>([null,]);
   const [warningMessage, setWarningMessage] = useState<string | null>(null);
 
   useEffect(() => {
     // if the field is required, set it to null
-    const initialFields = raffleForm.questions.map(question => question.isRequired ? null : '');
+    const initialFields = raffleForm.questions.map(question => (question.isOptional && question.isOptional === true) ? null : '');
     setFields(initialFields);
   }, [raffleForm.questions]);
 
-  const onFieldChecked = (index: number, newValue: string | null) => {
+  const onFieldChecked = (index: number, newValue: string | string[] | null) => {
     const newFields = [...fields];
     newFields[index] = newValue;
     setFields(newFields);
@@ -35,6 +35,11 @@ const Form: React.FC<FormProps> = ({ raffleForm, handleSendForm }) => {
       setWarningMessage('Please fill in all required fields');
       return;
     }
+    // send the form data to the server
+    /// change all the nulls to ''
+    const data = fields.map(field => field === null ? '' : field);
+    const response = await APIService.postRaffleForm(raffleForm.id, data);
+    // TODO: check if the response is successful, change the UI accordingly
     handleSendForm();
   }
 

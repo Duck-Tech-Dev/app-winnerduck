@@ -69,11 +69,11 @@ export class APIService {
     return response.json();
   }
 
-  static async postRaffleForm(raffleID: string, form: any) {
-    form.id = raffleID;
-    const response = await fetch(`${APIService.baseURL}/raffle/form`, {
+  static async postRaffleForm(raffleID: string, fields: Array<string | string[]>) {
+    const query = new URLSearchParams({ id: raffleID });
+    const response = await fetch(`${APIService.baseURL}/raffle/submit?` + query, {
       method: 'POST',
-      body: JSON.stringify(form),
+      body: JSON.stringify(fields),
       headers: {
         'Content-Type': 'application/json',
       },

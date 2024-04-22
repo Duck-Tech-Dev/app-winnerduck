@@ -9,29 +9,47 @@ export const TestForm: RaffleForm = {
       title: "Name & Surname",
       description: "Please enter your full name",
       type: "text",
-      template: "none",
-      isRequired: true
     },
     {
       title: "Phone Number",
       description: "A phone number we can reach you at",
-      type: "text",
-      template: "phone",
-      isRequired: true
+      type: "phone",
     },
     {
       title: "Email",
       description: "Please enter an email address we can reach you at",
-      type: "text",
-      template: "email",
-      isRequired: false
+      type: "email",
     },
     {
       title: "Age",
       description: "Please enter your age",
       type: "number",
-      template: "none",
-      isRequired: true
+    },
+    {
+      title: "Select",
+      description: "Please select an option",
+      type: "radio",
+      options: ["Option 1", "Option 2", "Option 3"],
+    },
+    {
+      title: "Select Multiple",
+      description: "Please select multiple options",
+      type: "checkbox",
+      options: ["Option 1", "Option 2", "Option 3"],
+    },
+    {
+      title: "Date",
+      description: "Please select a date",
+      type: "date",
+    },
+    {
+      title: "Slider",
+      description: "Please select a value",
+      type: "slider",
+      start: 0,
+      end: 10,
+      step: 1,
+      defaultValue: 5,
     },
   ]
 };
