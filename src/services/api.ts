@@ -1,6 +1,9 @@
+import RaffleForm from "@/interfaces/raffleForm";
+
 export class APIService {
   static baseURL: string = process.env.API_URL || 'http://localhost:3000';
 
+  // Protected routes
   static async logIn(username: string, password: string) {
     const response = await fetch(`${APIService.baseURL}/auth/login`, {
       method: 'POST',
@@ -45,6 +48,31 @@ export class APIService {
     return response.ok;
   }
 
+  static async logOut() {
+    const response = await fetch(`${APIService.baseURL}/auth/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    console.log("API Response from logOut:\n", response);
+    return response;
+  }
+
+  static async getRaffles(): Promise<Response> {
+    const response = await fetch(`${APIService.baseURL}/raffle/all`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    return response;
+  }
+  
+  
+  // Unprotected routes
   static async checkRaffleID(raffleID: string): Promise<boolean> {
     const query = new URLSearchParams({ id: raffleID });
     const response = await fetch(`${APIService.baseURL}/raffle/check?` + query, {
